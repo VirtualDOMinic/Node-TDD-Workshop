@@ -58,16 +58,16 @@ test("Blog returns ['One', 'Two', 'Three']", (t) => {
     })
 })
 
-test("Posting to blog returns ['a','b']", (t)=>{
+test("Posting to blog returns ['a','b']", (t) => {
     supertest(router)
     .post('/blog')
     .send(JSON.stringify(['a','b']))
     .set({ password: 'potato'})
     .expect(200)
-    .expect("Content-Type", /html/)
+    .expect("Content-Type", /json/)
     .end((err,res) => {
-    t.error(err, "No error if this passes")
-    t.deepEqual(JSON.parse(res.text), ['a','b'], "Response should give letter array")
-    t.end()
+        t.error(err, "No error if this passes");
+        t.deepEqual(JSON.parse(res.text), ['a','b'], "Response should give letter array");
+        t.end();
     }) 
 })

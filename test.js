@@ -15,7 +15,7 @@ test("home route returns a status code of 200", (t) => {
     .expect(200)
     .expect("content-type", /html/)
     .end((err, res) => {
-        t.error(err);
+        t.error(err, "no error");
         t.equal(res.statusCode, 200, "Should return 200");
         t.end();
     })
@@ -27,9 +27,21 @@ test("home route", (t) => {
     .expect(200)
     .expect('Content-Type', /html/)
     .end((err,res) => {
-        t.error(err)
+        t.error(err, "no error")
         t.equal(res.text, "Hello", "Response should contain 'Hello'")
         t.end()
     });
+})
+
+test("elephants returns 404 with 'unknown uri'", (t) => {
+    supertest(router)
+    .get('/elephants')
+    .expect(404)
+    .expect("Content-Type", /html/)
+    .end((err, res) => {
+        t.error(err, "no error if this passes")
+        t.equal(res.text, "Unknown URI", "Response should state 'Unknown URI'")
+        t.end()
+    })
 })
 

@@ -71,3 +71,15 @@ test("Posting to blog returns ['a','b']", (t) => {
         t.end();
     }) 
 })
+
+test("Posting nothing to blog gives you 403 forbidden", (t) => {
+    supertest(router)
+    .post('/blog')
+    .expect("Content-Type", /html/)
+    .expect(403)
+    .end((err,res) => {
+        t.error(err, "No error if this passes");
+        t.equal(res.text, "Forbidden", "Response body should say 'forbidden'")
+        t.end();
+    })
+})

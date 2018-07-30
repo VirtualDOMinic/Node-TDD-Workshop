@@ -21,4 +21,15 @@ test("home route returns a status code of 200", (t) => {
     })
 });
 
+test("home route", (t) => {
+    supertest(router)
+    .get('/')
+    .expect(200)
+    .expect('Content-Type', /html/)
+    .end((err,res) => {
+        t.error(err)
+        t.equal(res.text, "Hello", "Response should contain 'Hello'")
+        t.end()
+    });
+})
 

@@ -45,3 +45,14 @@ test("elephants returns 404 with 'unknown uri'", (t) => {
     })
 })
 
+test("Blog returns ['One', 'Two', 'Three']", (t) => {
+    supertest(router)
+    .get('/blog')
+    .expect(200)
+    .expect("Content-Type", /html/)
+    .end((err,res) => {
+        t.error(err , "No error if this passes")
+        t.deepEqual(JSON.parse(res.text), ['One','Two','Three'],"Response should give number array")
+        t.end();
+    })
+})

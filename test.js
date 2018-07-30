@@ -51,8 +51,23 @@ test("Blog returns ['One', 'Two', 'Three']", (t) => {
     .expect(200)
     .expect("Content-Type", /html/)
     .end((err,res) => {
+        // console.log(res,'Hello test')
         t.error(err , "No error if this passes")
         t.deepEqual(JSON.parse(res.text), ['One','Two','Three'],"Response should give number array")
         t.end();
     })
+})
+
+test("Posting to blog returns ['a','b']", (t)=>{
+    supertest(router)
+    .post('/blog')
+    .send(JSON.stringify(['a','b']))
+    .set({ password: 'potato'})
+    .expect(200)
+    .expect("Content-Type", /html/)
+    .end((err,res) => {
+    t.error(err, "No error if this passes")
+    t.deepEqual(JSON.parse(res.text), ['a','b'], "Response should give letter array")
+    t.end()
+    }) 
 })
